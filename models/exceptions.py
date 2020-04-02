@@ -1,0 +1,2 @@
+class WrongInstanceError(Exception):
+    pass
