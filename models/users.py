@@ -39,9 +39,8 @@ class UserFactory:
     @classmethod
     def create_user(cls, cls_type, name, email, **kwargs):
         if cls_type not in cls.types:
-            valid_types = ', '.join([cls_type for cls_type in cls.types.keys()])
             raise WrongClassTypeError(
-                f'Wrong user type. Expected types: {valid_types}'
+                f'Wrong user type. Expected types: {", ".join(cls.types.keys())}'
             )
         user_cls = cls.types[cls_type]
         return user_cls(name, email, **kwargs)

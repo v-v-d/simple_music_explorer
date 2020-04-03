@@ -48,9 +48,8 @@ class ProductFactory:
     @classmethod
     def create_product(cls, cls_type, name, artist, price, product_type, **kwargs):
         if cls_type not in cls.types:
-            valid_types = ', '.join([cls_type for cls_type in cls.types.keys()])
             raise WrongClassTypeError(
-                f'Wrong product type. Expected types: {valid_types}'
+                f'Wrong product type. Expected types: {", ".join(cls.types.keys())}'
             )
         product_cls = cls.types[cls_type]
         return product_cls(name, artist, price, product_type, **kwargs)
