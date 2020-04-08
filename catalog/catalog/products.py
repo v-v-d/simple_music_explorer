@@ -1,6 +1,6 @@
-from models.base import BaseProduct
-from models.exceptions import WrongInstanceError, WrongClassTypeError
-from models.mixins import PrototypeMixin
+from catalog.base import BaseProduct
+from catalog.exceptions import WrongInstanceError, WrongClassTypeError
+from catalog.mixins import PrototypeMixin
 
 
 class Album(BaseProduct):
