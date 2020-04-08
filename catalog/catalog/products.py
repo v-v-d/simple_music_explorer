@@ -1,6 +1,6 @@
-from models.base import BaseProduct
-from models.exceptions import WrongInstanceError
-from models.mixins import PrototypeMixin
+from catalog.base import BaseProduct
+from catalog.exceptions import WrongInstanceError, WrongClassTypeError
+from catalog.mixins import PrototypeMixin
 
 
 class Album(BaseProduct):
@@ -47,5 +47,9 @@ class ProductFactory:
 
     @classmethod
     def create_product(cls, cls_type, name, artist, price, product_type, **kwargs):
+        if cls_type not in cls.types:
+            raise WrongClassTypeError(
+                f'Wrong product type. Expected types: {", ".join(cls.types.keys())}'
+            )
         product_cls = cls.types[cls_type]
         return product_cls(name, artist, price, product_type, **kwargs)
