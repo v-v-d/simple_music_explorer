@@ -1,5 +1,5 @@
-from models.base import BaseUser
-from models.exceptions import WrongClassTypeError
+from models_.base import BaseUser
+from models_.exceptions import WrongClassTypeError
 
 
 class Artist(BaseUser):

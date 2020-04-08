@@ -1,6 +1,6 @@
 from pytest import fixture
 
-from models.users import UserFactory, User
+from models_.users import UserFactory, User
 
 
 @fixture()

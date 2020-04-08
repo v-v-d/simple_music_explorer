@@ -2,8 +2,8 @@ from datetime import datetime
 
 from pytest import fixture
 
-from models.products import Song, Album, ProductFactory
-from models.users import Artist
+from models_.products import Song, Album, ProductFactory
+from models_.users import Artist
 
 
 @fixture()

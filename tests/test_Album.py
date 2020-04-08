@@ -2,9 +2,9 @@ from datetime import datetime
 
 from pytest import fixture, raises
 
-from models.exceptions import WrongInstanceError
-from models.products import Song, Album
-from models.users import Artist
+from models_.exceptions import WrongInstanceError
+from models_.products import Song, Album
+from models_.users import Artist
 
 
 @fixture()

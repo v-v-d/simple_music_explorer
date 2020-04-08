@@ -1,8 +1,8 @@
 from pytest import fixture, raises
 
-from models.base import BaseProduct
-from models.exceptions import WrongInstanceError
-from models.users import Artist
+from models_.base import BaseProduct
+from models_.exceptions import WrongInstanceError
+from models_.users import Artist
 
 
 @fixture()

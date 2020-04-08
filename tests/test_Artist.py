@@ -1,6 +1,6 @@
 from pytest import fixture
 
-from models.users import Artist
+from models_.users import Artist
 
 
 @fixture()

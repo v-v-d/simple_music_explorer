@@ -1,7 +1,7 @@
 from pytest import fixture, raises
 
-from models.base import BaseUser
-from models.exceptions import WrongInstanceError
+from models_.base import BaseUser
+from models_.exceptions import WrongInstanceError
 
 
 @fixture()

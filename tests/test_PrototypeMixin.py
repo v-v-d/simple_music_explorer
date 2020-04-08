@@ -1,6 +1,6 @@
 from pytest import fixture
 
-from models.mixins import PrototypeMixin
+from models_.mixins import PrototypeMixin
 
 
 @fixture()
