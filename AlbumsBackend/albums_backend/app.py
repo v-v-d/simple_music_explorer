@@ -7,15 +7,15 @@ from albums_backend.settings import app_config
 
 
 def create_app():
-    app = Flask(__name__)
+    application = Flask(__name__)
     api = Api(
-        app, version='0.0.1', title='Simple Music Explorer albums microservice API',
+        application, version='0.0.1', title='Simple Music Explorer albums microservice API',
         description='Albums CRUD API'
     )
-    app.config.update({**app_config, **db_config})
-    db.init_app(app)
-    app.db = db
+    application.config.update({**app_config, **db_config})
+    db.init_app(application)
+    application.db = db
 
     api.add_namespace(api_namespace)
 
-    return app
+    return application
