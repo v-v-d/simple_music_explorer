@@ -1,4 +1,4 @@
-from catalog.app import create_app
+from albums_backend.app import create_app
 
 
 if __name__ == '__main__':
