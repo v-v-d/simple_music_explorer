@@ -8,4 +8,5 @@ faker==4.0.2
 pyjwt==1.7.1
 cryptography==2.9
 parse==1.15.0
+psycopg2==2.8.2
 werkzeug==0.16.0
