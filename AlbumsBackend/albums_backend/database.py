@@ -25,7 +25,9 @@ elif DATABASE_ENGINE == 'POSTGRESQL':
         'pwd': os.environ['POSTGRES_PASSWORD'],
         'port': os.environ['POSTGRES_PORT'],
     }
-    DB_URI = f'postgresql://{db_params["user"]}:{db_params["pwd"]}@{db_params["host"]}:{db_params["port"]}/{db_params["database"]}'
+    DB_URI = f'postgresql://{db_params["user"]}:{db_params["pwd"]}' \
+             f'@{db_params["host"]}:{db_params["port"]}/' \
+             f'{db_params["database"]}'
     db_config = {
         'SQLALCHEMY_DATABASE_URI': DB_URI.format(**db_params),
         'SQLALCHEMY_TRACK_MODIFICATIONS': False,

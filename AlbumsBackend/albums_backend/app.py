@@ -9,7 +9,8 @@ from albums_backend.settings import app_config
 def create_app():
     application = Flask(__name__)
     api = Api(
-        application, version='0.0.1', title='Simple Music Explorer albums microservice API',
+        application, version='0.0.1',
+        title='Simple Music Explorer albums microservice API',
         description='Albums CRUD API'
     )
     application.config.update({**app_config, **db_config})
