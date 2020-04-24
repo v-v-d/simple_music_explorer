@@ -52,7 +52,9 @@ def test_create_album_unauthorized(client):
 def test_get_list_artist_album(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
 
     assert http.client.CREATED == response_new_album.status_code
 
@@ -76,7 +78,9 @@ def test_get_list_artist_album(client, album_fixture):
 
     assert album == expected
 
-    response = delete_test_album(client, response_new_album.json['id'], headers)
+    response = delete_test_album(
+        client, response_new_album.json['id'], headers
+    )
     assert http.client.NO_CONTENT == response.status_code
 
 
@@ -119,7 +123,9 @@ def test_get_list_all_albums_search(client, album_fixture):
         assert is_album_keys_valid(album)
         assert 'testalbumname' in album['name'].lower()
 
-    response = delete_test_album(client, response_new_album.json['id'], headers)
+    response = delete_test_album(
+        client, response_new_album.json['id'], headers
+    )
     assert http.client.NO_CONTENT == response.status_code
 
 
@@ -188,7 +194,9 @@ def test_get_non_existing_song(client, album_fixture):
 def test_get_artist_album(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
     album_id = response_new_album.json['id']
 
     assert http.client.CREATED == response_new_album.status_code
@@ -223,12 +231,16 @@ def test_get_non_existing_artist_album(client, album_fixture):
 def test_update_artist_album(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
 
     assert http.client.CREATED == response_new_album.status_code
 
     album_id = response_new_album.json['id']
-    response_upd_album, upd_album = update_album(client, username, user_id, album_id, headers)
+    response_upd_album, upd_album = update_album(
+        client, username, user_id, album_id, headers
+    )
     result = response_upd_album.json
 
     assert http.client.OK == response_upd_album.status_code
@@ -245,14 +257,18 @@ def test_update_artist_album(client, album_fixture):
     }
     assert result == expected
 
-    response = delete_test_album(client, response_new_album.json['id'], headers)
+    response = delete_test_album(
+        client, response_new_album.json['id'], headers
+    )
     assert http.client.NO_CONTENT == response.status_code
 
 
 def test_update_artist_album_unauthorized(client, album_fixture):
     username, user_id = get_user()
     album_id = get_album_id_from_fixture(album_fixture)
-    response_upd_album, upd_album = update_album(client, username, user_id, album_id)
+    response_upd_album, upd_album = update_album(
+        client, username, user_id, album_id
+    )
 
     assert http.client.UNAUTHORIZED == response_upd_album.status_code
 
@@ -261,7 +277,9 @@ def test_update_non_existing_artist_album(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
     album_id = 123456
-    response_upd_album, upd_album = update_album(client, username, user_id, album_id, headers)
+    response_upd_album, upd_album = update_album(
+        client, username, user_id, album_id, headers
+    )
 
     assert http.client.NOT_FOUND == response_upd_album.status_code
 
@@ -276,7 +294,9 @@ def test_delete_artist_album_unauthorized(client, album_fixture):
 def test_get_list_artist_album_songs(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
 
     assert http.client.CREATED == response_new_album.status_code
 
@@ -287,7 +307,9 @@ def test_get_list_artist_album_songs(client, album_fixture):
 
     assert http.client.CREATED == response_new_song.status_code
 
-    response = client.get(f'/api/artist/albums/{album_id}/songs/', headers=headers)
+    response = client.get(
+        f'/api/artist/albums/{album_id}/songs/', headers=headers
+    )
     songs = response.json
 
     assert http.client.OK == response.status_code
@@ -318,7 +340,9 @@ def test_get_list_songs_of_non_existing_artist_album(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
     album_id = 123456
-    response = client.get(f'/api/artist/albums/{album_id}/songs/', headers=headers)
+    response = client.get(
+        f'/api/artist/albums/{album_id}/songs/', headers=headers
+    )
     result = response.json
 
     assert isinstance(result, list) and not result
@@ -327,7 +351,9 @@ def test_get_list_songs_of_non_existing_artist_album(client, album_fixture):
 def test_create_song(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
 
     assert http.client.CREATED == response_new_album.status_code
 
@@ -376,7 +402,9 @@ def test_create_song_of_non_existing_album(client, album_fixture):
 def test_get_artist_song(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
 
     assert http.client.CREATED == response_new_album.status_code
 
@@ -417,7 +445,9 @@ def test_get_non_existing_artist_song(client, album_fixture):
 def test_update_artist_song(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
 
     assert http.client.CREATED == response_new_album.status_code
 
@@ -462,7 +492,9 @@ def test_update_artist_song_unauthorized(client, album_fixture):
 def test_update_non_existing_artist_song(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
 
     assert http.client.CREATED == response_new_album.status_code
 
@@ -487,7 +519,9 @@ def test_update_non_existing_artist_song(client, album_fixture):
 def test_delete_artist_song(client, album_fixture):
     username, user_id = get_user()
     headers = get_headers(username, user_id)
-    response_new_album, new_album = create_test_album(client, username, user_id, headers)
+    response_new_album, new_album = create_test_album(
+        client, username, user_id, headers
+    )
 
     assert http.client.CREATED == response_new_album.status_code
 

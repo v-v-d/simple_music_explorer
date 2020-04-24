@@ -80,7 +80,8 @@ def is_dict_keys_valid(expected_keys, dict_obj, obj_name):
     if not all(key in dict_obj for key in expected_keys):
         logger.warning(
             f'Wrong {obj_name} keys in token. '
-            f'Expected: {", ".join(expected_keys)}, got: {", ".join(dict_obj.keys())}'
+            f'Expected: {", ".join(expected_keys)}, '
+            f'got: {", ".join(dict_obj.keys())}'
         )
         return False
     return True

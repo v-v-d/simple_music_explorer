@@ -44,7 +44,11 @@ def create_test_album(client, username, user_id, headers=None, **kwargs):
     new_album = get_random_album(username, user_id)
 
     if kwargs:
-        [new_album.update({key: val}) for key, val in kwargs.items() if key in new_album]
+        [
+            new_album.update({key: val})
+            for key, val in kwargs.items()
+            if key in new_album
+        ]
 
     return (
         client.post(
@@ -58,7 +62,11 @@ def update_album(client, username, user_id, album_id, headers=None, **kwargs):
     upd_album = get_random_album(username, user_id)
 
     if kwargs:
-        [upd_album.update({key: val}) for key, val in kwargs.items() if key in upd_album]
+        [
+            upd_album.update({key: val})
+            for key, val in kwargs.items()
+            if key in upd_album
+        ]
 
     return (
         client.patch(
@@ -68,25 +76,38 @@ def update_album(client, username, user_id, album_id, headers=None, **kwargs):
     )
 
 
-def create_test_song(client, username, user_id, album_id, headers=None, **kwargs):
+def create_test_song(
+        client, username, user_id, album_id, headers=None, **kwargs
+):
     new_song = get_random_song(username, user_id, album_id)
 
     if kwargs:
-        [new_song.update({key: val}) for key, val in kwargs.items() if key in new_song]
+        [
+            new_song.update({key: val})
+            for key, val in kwargs.items()
+            if key in new_song
+        ]
 
     return (
         client.post(
-            f'/api/artist/albums/{album_id}/songs/', data=new_song, headers=headers
+            f'/api/artist/albums/{album_id}/songs/',
+            data=new_song, headers=headers
         ),
         new_song
     )
 
 
-def update_song(client, username, user_id, album_id, song_id, headers=None, **kwargs):
+def update_song(
+        client, username, user_id, album_id, song_id, headers=None, **kwargs
+):
     upd_song = get_random_song(username, user_id, album_id)
 
     if kwargs:
-        [upd_song.update({key: val}) for key, val in kwargs.items() if key in upd_song]
+        [
+            upd_song.update({key: val})
+            for key, val in kwargs.items()
+            if key in upd_song
+        ]
 
     return (
         client.patch(

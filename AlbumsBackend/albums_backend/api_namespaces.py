@@ -1,7 +1,9 @@
 from flask_restplus import Namespace, fields
 
 
-api_namespace = Namespace('api', description='Albums microservice API operations')
+api_namespace = Namespace(
+    'api', description='Albums microservice API operations'
+)
 
 auth_parser = api_namespace.parser()
 auth_parser.add_argument(

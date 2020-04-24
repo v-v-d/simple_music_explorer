@@ -105,7 +105,9 @@ class ArtistAlbumController(Resource):
 
         return result, http.client.OK
 
-    @api_namespace.doc('delete_album', responses={http.client.NO_CONTENT: 'No content'})
+    @api_namespace.doc(
+        'delete_album', responses={http.client.NO_CONTENT: 'No content'}
+    )
     @api_namespace.expect(auth_parser)
     def delete(self, album_id):
         args = auth_parser.parse_args()
@@ -223,7 +225,9 @@ class ArtistAlbumSongController(Resource):
 
         return result, http.client.OK
 
-    @api_namespace.doc('delete_song', responses={http.client.NO_CONTENT: 'No content'})
+    @api_namespace.doc(
+        'delete_song', responses={http.client.NO_CONTENT: 'No content'}
+    )
     @api_namespace.expect(auth_parser)
     def delete(self, song_id):
         args = auth_parser.parse_args()

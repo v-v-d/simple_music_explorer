@@ -65,7 +65,8 @@ def album_fixture(client):
                 'Authorization': header,
             }
             response = client.post(
-                f'/api/artist/albums/{result["id"]}/songs/', data=song, headers=headers
+                f'/api/artist/albums/{result["id"]}/songs/',
+                data=song, headers=headers
             )
             assert http.client.CREATED == response.status_code
 
@@ -82,5 +83,7 @@ def album_fixture(client):
         headers = {
             'Authorization': header,
         }
-        response = client.delete(f'/api/artist/albums/{album_id}/', headers=headers)
+        response = client.delete(
+            f'/api/artist/albums/{album_id}/', headers=headers
+        )
         assert http.client.NO_CONTENT == response.status_code
