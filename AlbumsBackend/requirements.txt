@@ -10,3 +10,4 @@ cryptography==2.9
 parse==1.15.0
 psycopg2==2.8.2
 werkzeug==0.16.0
+flake8==3.7.9
