@@ -1,10 +1,11 @@
 services:
- - docker
+  - docker
+
 env:
   global:
     - DOCKER_COMPOSE_VERSION=1.25.5
-    - secure: "G/OBJA4AsLMxbnmMdgZRANrwiZxGagzsozpfZIGBX59m3v+9NpdBu5KQras+WkpCGKCwrHiEgUQ47z9aViYsMLn8ehKjAEzKUl/KleS9nnXbpUtCdRfvqt7QrH05u61xTqS866c7HmWZ6zbPGTwUjq7QRyVllyrVKPH84QE6s1uRR3IoJsDEBlONEVaxSs4MEAa2e/fMSDGi2c18aH3yG/NMBqW0E1iFoPbyXdQgzSKkke/Pn/zjlkqls2pbGD6mXPrgEEQPhXARoifdOlYsHUj8bxthF6e2fA/+dqtp6uQZygg4llNdyEzoMYSpaRJs08cJaez3QPy9/Ewkh7Ofk99jLf/M3C3OsSlXwK6bBKlf7It/cZTEs4or8wtO0N4LGk72fQfhWj6PfltbdW8sFeM1MuYtzwWCsKFIb8umyGnc3O7e5m8znS+1yOReZLYXGiN0mpMJEgwps3ityJNWNzZQAiyFrR3luaVr5X2TV55zl8T+EFep+nOa2MvlijLL5riKp16+sJNu58fTY2aoyYWAIDna+Fil34cxbM2xrPS9r/SqoujFST6j7nWIMSuP7nA0RwwK2uXAVmAbAk79f+Muh0T401sL4MbwwXvyRnIj2DkNgrtOGPC06HIm+FyDe54Cd5x2nXuHCr2MX9eRg0vj9Ro1DzU50c1dQRi93Tk="
-    - secure: "l2hoqn8Bymy4q1Yvz/zCAfvlASJZNE209pQYl0MD8B/vzUl2/NLKykHq9TiV+a+W2hccTdJevytjxKA+aBddiKN5vs0O5VcRsP921xH9hEQlYz081f5jVgtdBNbOpCM3cI7E+Ul+zAg7fsEe5m5/r25jK4ffrgjAYh+CanO/ZlmSIrRcJ3MQyZndl4Uit0Q8JjEHcJqcYiCOetbqBVXXY2JNTXGz/ujC47dqhJK+blspK1NCq0yY7vMxA2lzsxfpZFMZG79jIepHmpAd1r0f8zs7LWI1hEU6hh3s2sYm8tpvoNHuW3EINOO9DJRxj12uybm8pbsQZmgxwGZOAK/yDjQzVDSqEReDztntHQHy1w+gyyVGd9dZVC/N++60zs5VDv0tXf+anC1iA24ASyefEj/HHTpTBDEMGEcNh/5ewSY17nsvizFlcm4MEMMnw+YNPu932dup6BOgwXkA5GPV3EAuqAbsDNgyUXnEH9ytYuuWQOK0GU8GkDcSiNOBTkJXo7z8DdhmaHWICfdvlSWhd75Mn+S9Cm9xZOLhSG3fyYR9RWwiBAuKwKfYDi00vFc8CgAqT+rCO9dDadLaMYQRuZTornWfOKMeDNKfNr2Y65ZfWkay/LW7263TVke1SUtH9WPmhADPT8K0YXwnYmXw8JKTxDlJ/4qKx2JffN5wshY="
+    - secure: WvkFiTazZce0LTT8Vb0W2595JVrw3Lb4OeKhy1wgTpCOaArDRKOwgIlk2QBD19ELfC551h6JboAxPYOTPjkpAz+WiAt8FIRQILZUke43K01eUZOjGhApj06H0Q85uaBJq3LRKVBIEcWG+s+Xv5ZtohNqDv2/jJnxMtT+gOUcVOG/8n1Yn+mTB4zs5YWgGVkXy+4CXR1r10A00we0Aap+n2Np6CIk+/pk54Zh4bqS9Nd+Nm0Iiszh/O/f2Z5GbHDH5fhMrAo8PJ8uvd5MKsYx6Ip3yf7TztC11h71aSzLfWTAM3+j/oWIO4UC53y06xB9Xi0s7L/YR8Ct2QPxhlWdodgFiUM0yVsWNWVJ6NIZN/u8ICK1nrQHSZcadt0fyCF48ptmBaX35bsvmGMYnnQpIqfw1Eom+YhnpoOK/1W2Gv05W2tZfdZhs71/3Q2blg+WreRRz55fIBmHdgVnQ5LPsxUkVGIC2KPuvzw4GOj47M9ahGNJL8UmALJAplCJWIGiB1cjZrCPzZat/R2/H87Zn4jbvz10bKkSNPYxj8KsffIsZ2WAtRM4XXesonYvBAclLtMBTfxtgPCzh3f5QbZU647Qwx5CfFzTT3O56zbB5HQH4yRrEEi+2rZ6lWVlWRyKpTkW5Fwrp4Lp3qmHhC6o42QqZmMIR6TOkEKRA4cDjB4=
+    - secure: nb+LxRtSk7Fr2CzVyNb5NchlinSbu+Ienndsa0TrKq5m3BqbL6B8mLb8eaP0V50j6/H+dnyZDYvr4RAlFzKcox2nmeFzSiJbn9freeDFczh1nDPCNCpKdCk0qsm5pY3V3ACJMVjKGJ/LfLeHEM5+3eup0fpySsTnzEFtVnmgdHQ6APcxKJgE1EoRASaia/uGJiDgPgFzlJf/n3wzeKzOqQuSwyoNCvnIIubJg4G7WzwQFoTvj7cF918v1/9t3sGAnNaqFNkUuktut4fmnQz835Bcw6YbU69RS3izPcVvHDKumaa0oGCVCmfOZSwCcBasycOh9f7MCb1tGAoT1dzj7H0us/61isJTys29Q9xKKOd0nJabbADWSQGVfH0P6oqEScirSQInp7C6GaWdDzsz3hJ/SnQxgL8q+hPGZkiDzKrbQ/w571XaPdaUgea2nOwAyCGx9od2xcz7DaaxtBBYoDPv9RDokuCw/Wqy6YvkmvUt90DO/WKoD5vIZpS8Vug9gZF4GHHHLLL2KRVuwDp7gg/jpqZ9UjGDiABpz5ipiCwwhjkbbgEqLS2Dlm3hCVPZAe/6Q6oeovOeADh3V03eWpyJorMcSPKnSLxwewNrEpWrQhAlb8CpIpLM7TxGrU4vj5oos0ov0FQTSBr98dYfkx4bt0yOjt8zddLy8PtxyJQ=
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
@@ -13,8 +14,11 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker --version
   - docker-compose version
-  - echo "Login into DOcker Hub"
+  - echo "Login into Docker Hub"
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - export GIT_SHA=`git rev-parse --short HEAD`
+  - echo "Building commit $GIT_SHA"
+
 jobs:
   include:
     - stage: tests
@@ -28,4 +32,18 @@ jobs:
       script:
       - docker-compose build static-analysis
       - docker-compose run static-analysis
-
+    - stage: push
+      script:
+      - docker-compose build server
+      - docker tag albums_server:latest vasilevvd/albums-backend:$GIT_SHA
+      - docker push vasilevvd/albums-backend:$GIT_SHA
+      - docker tag albums_server:latest vasilevvd/albums-backend:$TRAVIS_BRANCH
+      deploy:
+      - provider: script
+        script: docker push vasilevvd/albums-backend:$TRAVIS_BRANCH
+        on:
+          branch: master
+      - provider: script
+        script: docker push vasilevvd/albums-backend:$TRAVIS_TAG
+        on:
+          tags: True
