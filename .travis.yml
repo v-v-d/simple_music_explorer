@@ -1,5 +1,6 @@
 services:
- - docker
+  - docker
+
 env:
   global:
     - DOCKER_COMPOSE_VERSION=1.25.5
@@ -13,7 +14,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
   - docker --version
   - docker-compose version
-  - echo "Login into DOcker Hub"
+  - echo "Login into Docker Hub"
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - export GIT_SHA=`git rev-parse --short HEAD`
   - echo "Building commit $GIT_SHA"
@@ -46,4 +47,3 @@ jobs:
         script: docker push vasilevvd/albums-backend:$TRAVIS_TAG
         on:
           tags: True
-
