@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_restplus import Api
 
+from albums_backend.api_namespaces import admin_namespace
 from albums_backend.controllers import api_namespace
 from albums_backend.database import db, db_config
 from albums_backend.settings import app_config
@@ -18,5 +19,6 @@ def create_app():
     application.db = db
 
     api.add_namespace(api_namespace)
+    api.add_namespace(admin_namespace)
 
     return application

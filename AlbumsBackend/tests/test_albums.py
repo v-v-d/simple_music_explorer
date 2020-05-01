@@ -545,3 +545,27 @@ def test_delete_artist_song_unauthorized(client, album_fixture):
     response = client.delete(f'/api/artist/songs/{song_id}/')
 
     assert http.client.UNAUTHORIZED == response.status_code
+
+
+def test_delete_album_by_admin(client):
+    username, user_id = get_user()
+    headers = get_headers(username, user_id)
+    response, new_album = create_test_album(client, username, user_id, headers)
+    result = response.json
+
+    assert http.client.CREATED == response.status_code
+
+    expected = {
+        'id': ANY,
+        'name': new_album['name'],
+        'price': new_album['price'],
+        'genre': new_album['genre'],
+        'date': ANY,
+        'description': new_album['description'],
+        'artist_name': username,
+        'artist_id': user_id,
+    }
+    assert result == expected
+
+    response = client.delete(f'/admin/albums/{result["id"]}/')
+    assert http.client.NO_CONTENT == response.status_code

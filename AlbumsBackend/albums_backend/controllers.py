@@ -4,9 +4,9 @@ from datetime import datetime
 from flask_restplus import Resource
 
 from albums_backend.api_namespaces import (
-    api_namespace, auth_parser, album_parser,
-    search_parser, album_model, song_model,
-    song_parser)
+    api_namespace, auth_parser, album_parser, search_parser,
+    album_model, song_model, song_parser, admin_namespace
+)
 from albums_backend.models import AlbumModel, SongModel
 from albums_backend.database import db
 from albums_backend.utils import authentication_header_parser
@@ -311,3 +311,19 @@ class SongController(Resource):
             return '', http.client.NOT_FOUND
 
         return song
+
+
+@admin_namespace.route('/albums/<int:album_id>/')
+class DeleteAlbumController(Resource):
+
+    @admin_namespace.doc(
+        'delete_album', responses={http.client.NO_CONTENT: 'No content'}
+    )
+    def delete(self, album_id):
+        album = AlbumModel.query.get(album_id)
+
+        if album:
+            db.session.delete(album)
+            db.session.commit()
+
+        return '', http.client.NO_CONTENT

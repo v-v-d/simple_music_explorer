@@ -1,6 +1,8 @@
 from flask_restplus import Namespace, fields
 
 
+admin_namespace = Namespace('admin', description='Admin operations')
+
 api_namespace = Namespace(
     'api', description='Albums microservice API operations'
 )
