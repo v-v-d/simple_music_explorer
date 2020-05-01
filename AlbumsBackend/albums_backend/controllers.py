@@ -5,7 +5,7 @@ from flask_restplus import Resource
 
 from albums_backend.api_namespaces import (
     api_namespace, auth_parser, album_parser, search_parser,
-    album_model, song_model,song_parser, admin_namespace
+    album_model, song_model, song_parser, admin_namespace
 )
 from albums_backend.models import AlbumModel, SongModel
 from albums_backend.database import db
