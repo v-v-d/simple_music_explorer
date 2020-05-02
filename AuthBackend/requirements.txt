@@ -1,0 +1,13 @@
+flask~=1.1.2
+flask-restplus~=0.13.0
+flask-sqlalchemy~=2.4.1
+pytest-flask~=0.14.0
+freezegun~=0.3.15
+delorean~=1.0.0
+faker~=4.0.2
+pyjwt~=1.7.1
+cryptography==2.9
+parse~=1.15.0
+psycopg2~=2.8.2
+werkzeug~=0.16.0
+flake8~=3.7.9
