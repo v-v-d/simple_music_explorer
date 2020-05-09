@@ -13,6 +13,11 @@ auth_parser.add_argument(
     help='Bearer Access Token'
 )
 
+delete_parser = auth_parser.copy()
+delete_parser.add_argument(
+    'password', type=str, required=True, help='password'
+)
+
 login_parser = api_namespace.parser()
 login_parser.add_argument(
     'username', type=str, required=True, help='username'
@@ -24,6 +29,9 @@ login_parser.add_argument(
 register_parser = login_parser.copy()
 register_parser.add_argument(
     'email', type=str, required=True, help='user email'
+)
+register_parser.add_argument(
+    'password2', type=str, required=True, help='confirm password'
 )
 
 

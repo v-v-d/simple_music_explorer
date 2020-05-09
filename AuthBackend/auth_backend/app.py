@@ -4,7 +4,8 @@ from flask_restplus import Api
 from auth_backend.api_namespaces import admin_namespace
 from auth_backend.controllers import api_namespace
 from auth_backend.database import db, db_config
-from auth_backend.settings import app_config
+from auth_backend.settings import app_config, mail_config
+from auth_backend.utils import mail
 
 
 def create_app():
@@ -14,8 +15,11 @@ def create_app():
         title='Simple Music Explorer auth microservice API',
         description='Auth CRUD API'
     )
-    application.config.update({**app_config, **db_config})
+    application.config.update({**app_config, **db_config, **mail_config})
+
+    mail.init_app(application)
     db.init_app(application)
+
     application.db = db
 
     api.add_namespace(api_namespace)
