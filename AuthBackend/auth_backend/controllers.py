@@ -7,11 +7,12 @@ from flask_restplus import Resource
 from auth_backend import config
 from auth_backend.api_namespaces import (
     admin_namespace, api_namespace, auth_parser, login_parser,
-    register_parser, user_model, delete_parser
+    register_parser, user_model, delete_parser, artist_parser,
+    artist_model
 )
 from auth_backend.database import db
 from auth_backend.email_token_generator import check_token
-from auth_backend.models import UserModel
+from auth_backend.models import UserModel, ArtistModel
 from auth_backend.token_validation import generate_token_header
 from auth_backend.utils import (
     authentication_header_parser, get_password_digest, send_verify_email,
@@ -127,20 +128,17 @@ class LogoutController(Resource):
         return '', http.client.UNAUTHORIZED
 
 
-@api_namespace.route('/auth/<int:user_id>/')
+@api_namespace.route('/auth/')
 class AuthController(Resource):
 
     @api_namespace.doc('get_user')
     @api_namespace.expect(auth_parser)
     @api_namespace.marshal_with(user_model)
-    def get(self, user_id):
+    def get(self):
         args = auth_parser.parse_args()
         user_data = authentication_header_parser(args['Authorization'])
 
-        if user_data['id'] != user_id:
-            return '', http.client.BAD_REQUEST
-
-        user = UserModel.query.filter_by(id=user_id).first()
+        user = UserModel.query.filter_by(id=user_data['id']).first()
 
         if not user:
             return '', http.client.NOT_FOUND
@@ -149,13 +147,92 @@ class AuthController(Resource):
 
     @api_namespace.doc('delete_user')
     @api_namespace.expect(delete_parser)
-    def delete(self, user_id):
+    def delete(self):
         args = delete_parser.parse_args()
-        authentication_header_parser(args['Authorization'])
+        user_data = authentication_header_parser(args['Authorization'])
 
-        user = UserModel.query.filter_by(id=user_id).first()
+        user = UserModel.query.filter_by(id=user_data['id']).first()
 
         if user:
+            if not is_password_valid(user, args['password']):
+                return '', http.client.BAD_REQUEST
+
+            db.session.delete(user)
+            db.session.commit()
+
+        return '', http.client.NO_CONTENT
+
+
+@api_namespace.route('/artist/')
+class ArtistController(Resource):
+
+    @api_namespace.doc('get_artist')
+    @api_namespace.expect(auth_parser)
+    @api_namespace.marshal_with(artist_model)
+    def get(self):
+        args = auth_parser.parse_args()
+        user = authentication_header_parser(args['Authorization'])
+
+        artist = ArtistModel.query.filter_by(user_id=user['id']).first()
+
+        if not artist:
+            return '', http.client.NOT_FOUND
+
+        return artist
+
+    @api_namespace.doc('create_artist')
+    @api_namespace.expect(artist_parser)
+    @api_namespace.marshal_with(artist_model, code=http.client.CREATED)
+    def post(self):
+        args = artist_parser.parse_args()
+        user = authentication_header_parser(args['Authorization'])
+
+        new_artist = ArtistModel(
+            name=args['name'],
+            location=args['location'],
+            bio=args['bio'],
+            website=args['website'],
+            user_id=user['id']
+        )
+
+        db.session.add(new_artist)
+        db.session.commit()
+
+        result = api_namespace.marshal(new_artist, artist_model)
+
+        return result, http.client.CREATED
+
+    @api_namespace.doc('update_artist')
+    @api_namespace.expect(artist_parser)
+    @api_namespace.marshal_with(artist_model, code=http.client.OK)
+    def patch(self):
+        args = artist_parser.parse_args()
+        user = authentication_header_parser(args['Authorization'])
+
+        artist = ArtistModel.query.filter_by(user_id=user['id']).first()
+
+        if not artist:
+            return '', http.client.NOT_FOUND
+
+        for key, val in args.items():
+            if hasattr(artist, key):
+                setattr(artist, key, val)
+
+        db.session.commit()
+
+        result = api_namespace.marshal(artist, artist_model)
+
+        return result, http.client.OK
+
+    @api_namespace.doc('delete_artist')
+    @api_namespace.expect(delete_parser)
+    def delete(self):
+        args = delete_parser.parse_args()
+        user = authentication_header_parser(args['Authorization'])
+
+        artist = ArtistModel.query.filter_by(user_id=user['id']).first()
+
+        if artist:
             if not is_password_valid(user, args['password']):
                 return '', http.client.BAD_REQUEST
 
@@ -176,6 +253,22 @@ class AdminDeleteUserController(Resource):
 
         if user:
             db.session.delete(user)
+            db.session.commit()
+
+        return '', http.client.NO_CONTENT
+
+
+@admin_namespace.route('/auth/<int:artist_id>/')
+class AdminDeleteArtistController(Resource):
+
+    @admin_namespace.doc(
+        'delete_artist', responses={http.client.NO_CONTENT: 'No content'}
+    )
+    def delete(self, artist_id):
+        artist = ArtistModel.query.filter_by(id=artist_id).first()
+
+        if artist:
+            db.session.delete(artist)
             db.session.commit()
 
         return '', http.client.NO_CONTENT

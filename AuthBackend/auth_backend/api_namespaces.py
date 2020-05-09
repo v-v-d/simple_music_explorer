@@ -46,9 +46,6 @@ artist_parser.add_argument(
     'bio', type=str, required=False, help='artist bio'
 )
 artist_parser.add_argument(
-    'label', type=str, required=False, help='artist record label'
-)
-artist_parser.add_argument(
     'website', type=str, required=False, help='artist website'
 )
 

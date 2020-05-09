@@ -13,6 +13,11 @@ class UserModel(db.Model):
     date = db.Column(db.DateTime, server_default=func.now())
     is_active = db.Column(db.Boolean, default=False)
 
+    artists = db.relationship(
+        'ArtistModel', foreign_keys='ArtistModel.user_id',
+        back_populates='user', cascade="all, delete-orphan"
+    )
+
 
 class ArtistModel(db.Model):
     __tablename__ = 'artists'
@@ -25,3 +30,5 @@ class ArtistModel(db.Model):
     user_id = db.Column(
         db.Integer, db.ForeignKey('users.id'), nullable=False
     )
+
+    user = db.relationship('UserModel', back_populates='artists')
