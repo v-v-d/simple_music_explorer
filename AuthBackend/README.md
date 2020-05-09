@@ -1,8 +1,8 @@
-Simple Music Explorer Albums microservice
+Simple Music Explorer Auth microservice
 =======
 
-Simple Music Explorer Albums is a Flask application that creates a RESTful 
-backend to store music in album format.
+Simple Music Explorer Auth is a Flask application that creates a RESTful 
+backend to store users.
 
 Set it up
 ------
@@ -17,7 +17,7 @@ Linux
     
 Windows
 
-    $ py -m venv ./venv
+    $ virtualenv venv
     $ venv/Scripts/activate
     $ pip install -r requirements.txt
 
@@ -50,6 +50,6 @@ Run the unit tests with
 Dependencies
 ------
 
-Simple Music Explorer Albums uses Flask as a web framework, Flask RESTplus 
+Simple Music Explorer Auth uses Flask as a web framework, Flask RESTplus 
 for creating the interface, and SQLAlchemy to handle the database models. 
 It uses a SQLlite database for local development.
