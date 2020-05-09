@@ -192,11 +192,8 @@ def test_logout_unauthorized(client):
 
 
 def test_delete_unauthorized(client):
-    user_id = fake.pyint()
     password = fake.password(length=15, special_chars=True)
-    response = client.delete(
-        f'/api/auth/{user_id}/', data={'password': password}
-    )
+    response = client.delete('/api/auth/', data={'password': password})
 
     assert http.client.UNAUTHORIZED == response.status_code
 
@@ -227,8 +224,7 @@ def test_delete_bad_password(client):
 
 
 def test_get_user_unauthorized(client):
-    user_id = fake.pyint()
-    response = client.get(f'/api/auth/{user_id}/')
+    response = client.get('/api/auth/')
     assert http.client.UNAUTHORIZED == response.status_code
 
 
@@ -243,9 +239,8 @@ def test_get_user(client):
     assert http.client.OK == response.status_code
 
     user = UserModel.query.filter_by(name=username).first()
-    user_id = user.id
-    headers = get_headers(username, user_id)
-    response = client.get(f'/api/auth/{user_id}/', headers=headers)
+    headers = get_headers(username, user.id)
+    response = client.get('/api/auth/', headers=headers)
     result = response.json
 
     assert http.client.OK == response.status_code
@@ -264,33 +259,11 @@ def test_get_user(client):
     assert http.client.NO_CONTENT == response.status_code
 
 
-def test_get_user_bad_user_id(client):
-    response, new_user = register_user(client)
-
-    assert http.client.OK == response.status_code
-
-    username = new_user['username']
-    response = activate_user(client, username)
-
-    assert http.client.OK == response.status_code
-
-    user = UserModel.query.filter_by(name=username).first()
-    headers = get_headers(username, user.id)
-    bad_user_id = 123456
-    response = client.get(f'/api/auth/{bad_user_id}/', headers=headers)
-
-    assert http.client.BAD_REQUEST == response.status_code
-
-    response = delete_user(client, new_user)
-
-    assert http.client.NO_CONTENT == response.status_code
-
-
 def test_get_user_unknown_user(client):
     username = fake.first_name()
     user_id = fake.pyint()
     headers = get_headers(username, user_id)
-    response = client.get(f'/api/auth/{user_id}/', headers=headers)
+    response = client.get('/api/auth/', headers=headers)
 
     assert http.client.NOT_FOUND == response.status_code
 

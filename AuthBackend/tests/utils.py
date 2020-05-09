@@ -79,7 +79,7 @@ def delete_user(client, user_data, bad_password=False):
         'password': fake.password() if bad_password else user_data['password']
     }
 
-    return client.delete(f'/api/auth/{user_id}/', headers=headers, data=data)
+    return client.delete('/api/auth/', headers=headers, data=data)
 
 
 def get_headers(username, user_id):
