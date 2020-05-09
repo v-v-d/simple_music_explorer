@@ -1,7 +1,7 @@
 import delorean
 from freezegun import freeze_time
 
-from albums_backend import token_validation
+from auth_backend import token_validation
 from .constants import PRIVATE_KEY, PUBLIC_KEY
 
 INVALID_PUBLIC_KEY = '''
