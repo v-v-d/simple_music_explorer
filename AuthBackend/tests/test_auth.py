@@ -9,8 +9,9 @@ from faker import Faker
 from auth_backend.models import UserModel
 from .utils import (
     register_user, activate_user, create_login_user, get_headers,
-    delete_user, get_login_user_from_register_user,
-    create_artist, get_artist, check_artist, get_artist_data, delete_artist)
+    delete_user, get_login_user_from_register_user, create_artist,
+    get_artist, check_artist, get_artist_data, delete_artist
+)
 
 fake = Faker()
 
