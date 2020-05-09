@@ -233,10 +233,10 @@ class ArtistController(Resource):
         artist = ArtistModel.query.filter_by(user_id=user['id']).first()
 
         if artist:
-            if not is_password_valid(user, args['password']):
+            if not is_password_valid(artist.user, args['password']):
                 return '', http.client.BAD_REQUEST
 
-            db.session.delete(user)
+            db.session.delete(artist)
             db.session.commit()
 
         return '', http.client.NO_CONTENT
@@ -258,7 +258,7 @@ class AdminDeleteUserController(Resource):
         return '', http.client.NO_CONTENT
 
 
-@admin_namespace.route('/auth/<int:artist_id>/')
+@admin_namespace.route('/artist/<int:artist_id>/')
 class AdminDeleteArtistController(Resource):
 
     @admin_namespace.doc(

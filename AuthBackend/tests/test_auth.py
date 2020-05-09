@@ -9,8 +9,8 @@ from faker import Faker
 from auth_backend.models import UserModel
 from .utils import (
     register_user, activate_user, create_login_user, get_headers,
-    delete_user, get_login_user_from_register_user
-)
+    delete_user, get_login_user_from_register_user,
+    create_artist, get_artist, check_artist, get_artist_data, delete_artist)
 
 fake = Faker()
 
@@ -268,7 +268,214 @@ def test_get_user_unknown_user(client):
     assert http.client.NOT_FOUND == response.status_code
 
 
-def test_delete_admin(client):
+def test_get_artist(client):
+    response, new_user = register_user(client)
+
+    assert http.client.OK == response.status_code
+
+    username = new_user['username']
+    response = activate_user(client, username)
+
+    assert http.client.OK == response.status_code
+
+    user = UserModel.query.filter_by(name=username).first()
+    user_id = user.id
+    response, new_artist = create_artist(client, username, user_id)
+    result = response.json
+
+    assert http.client.CREATED == response.status_code
+
+    assert check_artist(new_artist, result)
+
+    response = get_artist(client, username, user_id)
+    result = response.json
+
+    assert http.client.OK == response.status_code
+
+    assert check_artist(new_artist, result)
+
+    response = delete_user(client, new_user)
+
+    assert http.client.NO_CONTENT == response.status_code
+
+
+def test_get_artist_unknown_artist(client):
+    response, new_user = register_user(client)
+
+    assert http.client.OK == response.status_code
+
+    username = new_user['username']
+    response = activate_user(client, username)
+
+    assert http.client.OK == response.status_code
+
+    user = UserModel.query.filter_by(name=username).first()
+    response = get_artist(client, username, user.id)
+
+    assert http.client.NOT_FOUND == response.status_code
+
+    response = delete_user(client, new_user)
+
+    assert http.client.NO_CONTENT == response.status_code
+
+
+def test_get_artist_unauthorized(client):
+    response = client.get('/api/artist/')
+    assert http.client.UNAUTHORIZED == response.status_code
+
+
+def test_create_artist(client):
+    response, new_user = register_user(client)
+
+    assert http.client.OK == response.status_code
+
+    username = new_user['username']
+    response = activate_user(client, username)
+
+    assert http.client.OK == response.status_code
+
+    user = UserModel.query.filter_by(name=username).first()
+    response, new_artist = create_artist(client, username, user.id)
+    result = response.json
+
+    assert http.client.CREATED == response.status_code
+
+    assert check_artist(new_artist, result)
+
+    response = delete_user(client, new_user)
+
+    assert http.client.NO_CONTENT == response.status_code
+
+
+def test_create_artist_unauthorized(client):
+    user_id = 123456
+    new_artist = get_artist_data(user_id)
+    response = client.post('/api/artist/', data=new_artist)
+    assert http.client.UNAUTHORIZED == response.status_code
+
+
+def test_update_artist(client):
+    response, new_user = register_user(client)
+
+    assert http.client.OK == response.status_code
+
+    username = new_user['username']
+    response = activate_user(client, username)
+
+    assert http.client.OK == response.status_code
+
+    user = UserModel.query.filter_by(name=username).first()
+    user_id = user.id
+    response, new_artist = create_artist(client, username, user_id)
+    result = response.json
+
+    assert http.client.CREATED == response.status_code
+
+    assert check_artist(new_artist, result)
+
+    response, upd_artist = create_artist(client, username, user_id, patch=True)
+    result = response.json
+
+    assert http.client.OK == response.status_code
+
+    assert check_artist(upd_artist, result)
+
+    response = delete_user(client, new_user)
+
+    assert http.client.NO_CONTENT == response.status_code
+
+
+def test_update_artist_unauthorized(client):
+    user_id = 123456
+    new_artist = get_artist_data(user_id)
+    response = client.patch('/api/artist/', data=new_artist)
+    assert http.client.UNAUTHORIZED == response.status_code
+
+
+def test_update_artist_unknown_artist(client):
+    response, new_user = register_user(client)
+
+    assert http.client.OK == response.status_code
+
+    username = new_user['username']
+    response = activate_user(client, username)
+
+    assert http.client.OK == response.status_code
+
+    user = UserModel.query.filter_by(name=username).first()
+    response, _ = create_artist(client, username, user.id, patch=True)
+
+    assert http.client.NOT_FOUND == response.status_code
+
+    response = delete_user(client, new_user)
+
+    assert http.client.NO_CONTENT == response.status_code
+
+
+def test_delete_artist(client):
+    response, new_user = register_user(client)
+
+    assert http.client.OK == response.status_code
+
+    username = new_user['username']
+    response = activate_user(client, username)
+
+    assert http.client.OK == response.status_code
+
+    user = UserModel.query.filter_by(name=username).first()
+    user_id = user.id
+    response, new_artist = create_artist(client, username, user_id)
+    result = response.json
+
+    assert http.client.CREATED == response.status_code
+
+    assert check_artist(new_artist, result)
+
+    response = delete_artist(client, username, user_id, new_user['password'])
+
+    assert http.client.NO_CONTENT == response.status_code
+
+    response = delete_user(client, new_user)
+
+    assert http.client.NO_CONTENT == response.status_code
+
+
+def test_delete_artist_unauthorized(client):
+    password = fake.password(length=15, special_chars=True)
+    response = client.delete('/api/artist/', data={'password': password})
+    assert http.client.UNAUTHORIZED == response.status_code
+
+
+def test_delete_artist_bad_password(client):
+    response, new_user = register_user(client)
+
+    assert http.client.OK == response.status_code
+
+    username = new_user['username']
+    response = activate_user(client, username)
+
+    assert http.client.OK == response.status_code
+
+    user = UserModel.query.filter_by(name=username).first()
+    user_id = user.id
+    response, new_artist = create_artist(client, username, user_id)
+    result = response.json
+
+    assert http.client.CREATED == response.status_code
+
+    assert check_artist(new_artist, result)
+
+    bad_password = fake.password(length=15, special_chars=True)
+    response = delete_artist(client, username, user_id, bad_password)
+
+    assert http.client.BAD_REQUEST == response.status_code
+
+    response = delete_user(client, new_user)
+
+    assert http.client.NO_CONTENT == response.status_code
+
+
+def test_delete_user_by_admin(client):
     response, new_user = register_user(client)
 
     assert http.client.OK == response.status_code
@@ -280,5 +487,34 @@ def test_delete_admin(client):
 
     user = UserModel.query.filter_by(name=username).first()
     response = client.delete(f'/admin/auth/{user.id}/')
+
+    assert http.client.NO_CONTENT == response.status_code
+
+
+def test_delete_artist_by_admin(client):
+    response, new_user = register_user(client)
+
+    assert http.client.OK == response.status_code
+
+    username = new_user['username']
+    response = activate_user(client, username)
+
+    assert http.client.OK == response.status_code
+
+    user = UserModel.query.filter_by(name=username).first()
+
+    user_id = user.id
+    response, new_artist = create_artist(client, username, user_id)
+    result = response.json
+
+    assert http.client.CREATED == response.status_code
+
+    assert check_artist(new_artist, result)
+
+    response = client.delete(f'/admin/artist/{user.artists[0].id}/')
+
+    assert http.client.NO_CONTENT == response.status_code
+
+    response = delete_user(client, new_user)
 
     assert http.client.NO_CONTENT == response.status_code

@@ -61,6 +61,6 @@ artist_model = api_namespace.model('Artist', {
     'name': fields.String(),
     'location': fields.String(),
     'bio': fields.String(),
-    'website': fields.Url(),
+    'website': fields.String(),
     'user_id': fields.Integer(),
 })

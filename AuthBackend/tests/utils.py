@@ -1,3 +1,5 @@
+from unittest.mock import ANY
+
 from faker import Faker
 
 from auth_backend import token_validation
@@ -7,19 +9,57 @@ from auth_backend.utils import urlsafe_base64_encode
 from tests.constants import PRIVATE_KEY
 
 fake = Faker()
-#
-#
-# def create_login_user(bad_email=False, has_email=False):
-#     new_user = {
-#         'username': fake.first_name(),
-#         'password': fake.password(length=15, special_chars=True),
-#     }
-#
-#     if has_email:
-#         email = '' if bad_email else fake.free_email()
-#         new_user.update({'email': email})
-#
-#     return new_user
+
+
+def get_artist_data(user_id):
+    return {
+        'name': fake.name(),
+        'location': fake.country(),
+        'bio': fake.text(250),
+        'website': fake.url(),
+        'user_id': user_id,
+    }
+
+
+def create_artist(client, username, user_id, patch=False):
+    new_artist = get_artist_data(user_id)
+    headers = get_headers(username, user_id)
+    url = '/api/artist/'
+
+    if patch:
+        response = client.patch(url, headers=headers, data=new_artist)
+    else:
+        response = client.post(url, headers=headers, data=new_artist)
+
+    return response, new_artist
+
+
+def delete_artist(client, username, user_id, password):
+    headers = get_headers(username, user_id)
+
+    return client.delete(
+        '/api/artist/', headers=headers, data={'password': password}
+    )
+
+
+def get_artist(client, username, user_id):
+    headers = get_headers(username, user_id)
+    response = client.get('/api/artist/', headers=headers)
+
+    return response
+
+
+def check_artist(new_artist, result):
+    expected = {
+        'id': ANY,
+        'name': new_artist['name'],
+        'location': new_artist['location'],
+        'bio': new_artist['bio'],
+        'website': new_artist['website'],
+        'user_id': new_artist['user_id'],
+    }
+
+    return result == expected
 
 
 def create_login_user():
